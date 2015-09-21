@@ -1,0 +1,26 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/delete.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Enlever une formation - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+    <h2>Suprimer une formation</h2>
+
+    <p>
+        Attention : la formation "{{ advert.title }}" sera suprimée directment
+        après confirmation.
+    </p>
+    <form action="{{ path('edu_forma_delete', {'id': advert.id}) }}" method="post">
+    <a href="{{ path('edu_forma_view', {'id': advert.id}) }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Retour à la la formation
+    </a>
+        <input type="submit" value="Confirmer" class="btn btn-danger" />
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}

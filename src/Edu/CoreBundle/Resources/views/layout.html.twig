@@ -1,0 +1,69 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}EduFactory Plateforme{% endblock %}</title>
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        Connecté en tant que {{ app.user.username }}
+        -
+        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+        <a href="{{ path('fos_user_registration_register') }}">Inscription</a>
+    {% endif %}
+            <div id="header" class="jumbotron">
+        <h1>
+            <a href="{{ path('edu_core_homepage') }}">
+            <img src="http://www.edufactory.com/images/logo-edufactory.png">
+        </a>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div id="menu" class="col-md-3">
+            <h3>Navigation</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('edu_core_homepage') }}">Accueil</a></li>
+                <li><a href="{{ path('edu_core_contact') }}">Mon compte</a></li>
+                {% if is_granted('ROLE_AUTEUR') %}
+                    <li><a href="{{ path('edu_forma_add') }}">Ajouter une formation</a></li>
+                {% else %}
+                    <li><a href="{{ path('edu_core_beauthor') }}">Devenir auteur</a></li>
+                {% endif %}
+                <li><a href="{{ path('edu_core_formation') }}">Mes Formations</a></li>
+                <li><a href="{{ path('edu_core_contact') }}">Forum</a></li>
+                <li><a href="{{ path('edu_core_contact') }}">Contact</a></li>
+                <li><a href="http://www.edufactory.com">EduFactory</a></li>
+            </ul>
+        </div>
+        <div id="content" class="col-md-9">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p> © EduFactory {{ 'now'|date('Y') }} | Communication, Reproduction, Utilisation Interdites | Tous Droits Réservés</p>
+    </footer>
+</div>
+{% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+</body>
+</html>

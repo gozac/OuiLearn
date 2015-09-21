@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>An Error Occurred: {{ status_code }}</title>
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+<div id="header" class="jumbotron">
+    <h1>
+        <a href="{{ path('edu_core_homepage') }}">
+            <img src="http://www.edufactory.com/images/logo-edufactory.png">
+        </a>
+    </h1>
+</div>
+<h1>Oops! Une erreur s'est produite</h1>
+<h2>Désolé, cette page n'est pas disponible.</h2>
+
+<div>
+    Please let us know what you were doing when this error occurred.
+    Sorry for any inconvenience caused.
+</div>
+</body>
+</html>

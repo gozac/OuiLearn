@@ -1,0 +1,27 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/edit.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier une formation - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+  <h2>Modifier une formation</h2>
+
+  {{ include("EduFormaBundle:Advert:form.html.twig") }}
+
+  <p>
+    Vous éditez une formation déjà existante, merci de ne pas changer
+    l'esprit générale de la formation déjà publiée.
+  </p>
+
+  <p>
+    <a href="{{ path('edu_forma_view', {'id': advert.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la formation
+    </a>
+  </p>
+
+{% endblock %}

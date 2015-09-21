@@ -1,0 +1,14 @@
+{# src/Edu/FormaBundle/Resources/views/layout.html.twig #}
+
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('info') %}
+    <p><div>{{ message }} </div></p>
+    {% endfor %}
+    <h2>Bienvenue sur EduFormation</h2>
+    Des cours 100% en ligne pour un apprentissage efficace
+    {{ "\n\n\n\n"|nl2br }}
+    <h4>Formations recentes</h4>
+            {{ render(controller("EduFormaBundle:Advert:menu", {'limit': 2})) }}
+{% endblock %}

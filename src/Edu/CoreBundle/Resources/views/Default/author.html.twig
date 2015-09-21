@@ -1,0 +1,31 @@
+{# src/Edu/FormaBundle/Resources/views/layout.html.twig #}
+
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Devenir auteur
+{% endblock %}
+
+{% block body %}
+    <p>
+    Qui peut être auteur ?
+    Pour être auteur, vous devez disposer d’une expertise technique sur un sujet. Vous n’êtes pas nécessairement le seul dan l’entreprise, mais vous avez la compétence sur le sujet et l’expérience de son application en univers professionnel.
+
+    Que fait un auteur ?
+    L’auteur a le choix entre deux modes de fonctionnement :- l’écriture d’un contenu qui permet à tous les apprenants de fonctionner de façon autonome- le coaching d’apprenants, en répondant à leurs questions par mail, chat, téléphone ou directementLe coaching peut exister seul au début. Toutefois si le sujet s’avère intéresser plusieurs personnes, il devient très utile de passer au contenu .
+
+    Pourquoi être auteur ?Pour partager votre expertise, votre expérience et vos savoir-faire avec d’autres, plus jeunes ou nouvellement promus dans votre activité.
+
+    En pratique…
+    Vous décidez de vos sujets, du temps de coaching disponible, en accord avec votre manager.La plateforme s’occupe du reste et garantit le respect de vos décisions.
+    </p>
+    <form action="{{ path('edu_core_beauthor') }}" method="post">
+        <a href="{{ path('edu_core_homepage')}}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à l'accueil
+        </a>
+        <input type="submit" value="Confirmer"/>
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}

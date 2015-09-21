@@ -1,0 +1,17 @@
+services:
+#    edu_forma.example:
+#        class: Edu\FormaBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    edu_forma.antispam:
+            class: Edu\FormaBundle\Antispam\EduAntispam
+            arguments: [@mailer, %locale%, 50]
+    edu_forma.doctrine.notification:
+        class: Edu\FormaBundle\DoctrineListener\ApplicationNotification
+        arguments: [@mailer]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    edu_forma.validator.antiflood:                              # Le nom du service
+                class: Edu\FormaBundle\Validator\AntifloodValidator     # La classe du service, ici notre validateur déjà créé
+                arguments: [@request_stack, @doctrine.orm.entity_manager] # Les données qu'on injecte au service : la requête et l'EntityManager
+                tags:
+                    - { name: validator.constraint_validator, alias: edu_forma_antiflood }  # C'est avec l'alias qu'on retrouvera le service

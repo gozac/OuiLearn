@@ -1,0 +1,30 @@
+# src/Edu/FormaBundle/Resources/config/routing.yml
+
+edu_forma_home:
+    path:      /{page}
+    defaults:  { _controller: EduFormaBundle:Advert:index, page: 1 }
+    requirements:
+        page:    \d*
+
+edu_forma_view:
+    path:      /advert/{id}/{page}
+    defaults:  { _controller: EduFormaBundle:Advert:view, page: 1 }
+    requirements:
+        id:   \d+
+        page: \d*
+
+edu_forma_add:
+    path:      /add
+    defaults:  { _controller: EduFormaBundle:Advert:add }
+
+edu_forma_edit:
+    path:      /edit/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:edit }
+    requirements:
+        id: \d+
+
+edu_forma_delete:
+    path:      /delete/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:delete }
+    requirements:
+        id: \d+

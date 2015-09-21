@@ -1,0 +1,17 @@
+{# src/Edu/EduFormaBundle/Resources/views/Advert/menu.html.twig #}
+
+{# Ce template n'hérite de personne,
+   tout comme le template inclus avec {{ include() }}. #}
+
+<ul class="nav nav-pills nav-stacked">
+    {% for advert in listAdverts %}
+        <li>
+            <a href="{{ path('edu_forma_view', {'id': advert.id}) }}">
+                {% if advert.image is not null %}
+                <img alt="{{ advert.image.alt }}"  width="50" height="50" src="{{ asset(advert.image.uploadDir ~ '/' ~ advert.image.id ~ '.' ~ advert.image.url) }}" />
+                {% endif %}
+                {{ advert.title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
