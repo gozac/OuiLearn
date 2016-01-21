@@ -1,0 +1,9 @@
+edu_qcm_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EduQcmBundle:Default:index }
+
+edu_qcm_add:
+    path:      /newqcm/{id}
+    defaults:  { _controller: EduQcmBundle:Default:addpage }
+    requirements:
+        id:   \d+

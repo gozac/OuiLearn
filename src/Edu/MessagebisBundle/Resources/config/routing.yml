@@ -1,0 +1,13 @@
+edu_messagebis_homepage:
+    path:     /
+    defaults: { _controller: EduMessagebisBundle:Default:index }
+
+edu_messagebis_view:
+    path:     /view/{id}
+    defaults: { _controller: EduMessagebisBundle:Default:view }
+    requirements:
+      id:   \d+
+
+edu_messagebis_add:
+    path:     /add
+    defaults: { _controller: EduMessagebisBundle:Default:add }

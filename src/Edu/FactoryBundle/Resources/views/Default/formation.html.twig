@@ -1,0 +1,9 @@
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Classement formation - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ render(controller("EduFactoryBundle:Factory:formationsample")) }}
+{% endblock %}

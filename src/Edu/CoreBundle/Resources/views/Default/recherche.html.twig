@@ -1,0 +1,37 @@
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <form action="{{ path('edu_core_recherche') }}" method="post">
+        {# Ceci va générer le champ CSRF #}
+        <div class="col-md-5">
+            {{ form_rest(form1) }}
+        </div>
+        <div class="col-md-5">
+            <input type="submit" value="Confirmer" class="btn btn-ok" />
+        </div>
+    </form>
+    {{ "\n\n\n"|nl2br }}
+    <form action="{{ path('edu_core_recherche') }}" method="post">
+        {# Ceci va générer le champ CSRF #}
+        <div class="col-md-5">
+            {{ form_rest(form3) }}
+        </div>
+        <div class="col-md-5">
+            <input type="submit" value="Confirmer" class="btn btn-ok" />
+        </div>
+    </form>
+    {{ "\n\n\n"|nl2br }}
+    <form action="{{ path('edu_core_recherche') }}" method="post">
+        {# Ceci va générer le champ CSRF #}
+        <div class="col-md-5">
+            {{ form_rest(form2) }}
+        </div>
+        <div class="col-md-5">
+            <input type="submit" value="Confirmer" class="btn btn-ok" />
+        </div>
+    </form>
+    {{ "\n\n\n"|nl2br }}
+    <div class="col-md-12">
+    {{ render(controller("EduFactoryBundle:Factory:formationsample")) }}
+    </div>
+{% endblock %}

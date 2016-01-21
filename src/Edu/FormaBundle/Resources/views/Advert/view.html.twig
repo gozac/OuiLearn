@@ -7,17 +7,8 @@
 {% endblock %}
 
 {% block eduforma_body %}
-
-
-    {% if listAdvertSkills|length > 0 %}
-        <div>
-            Cette annonce requiert les compétences suivantes :
-            <ul>
-                {% for advertSkill in listAdvertSkills %}
-                    <li>{{ advertSkill.skill.name }} : niveau {{ advertSkill.level }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+    {% if advert.published == false %}
+        Cette annonce n'a pas été publié.
     {% endif %}
     <h2>{{ advert.title }}</h2>
     {% if not advert.categories.empty %}
@@ -29,32 +20,80 @@
         </p>
     {% endif %}
 
-    <i>Par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}</i>
-
-    <div class="well">
-        {{ advert.content[0][page - 1] | raw }}
-    </div>
+    <i>Par {{ advert.author.username }}, le {{ advert.date|date('d/m/Y') }}</i>
+    <br>
+<div class="text-center">
+    {% if contentnew.scoreminimum > 0 %}
+        {{ include("EduQcmBundle:Default:formreponseqcm.html.twig") }}
+    {% else %}
+        {% if contentnew.url %}
+            <video controls >
+                <source src="{{ asset(contentnew.WebPath) }}" type="video/mp4"/>
+            </video>
+        {% endif %}
+        </div>
+        <div class="well">
+            {{ contentnew.texte | raw }}
+        </div>
+    {% endif %}
     <ul class="pagination">
   {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-  {% for p in range(1, advert.content[0]|length) %}
-    <li{% if p == page %} class="active"{% endif %}>
-        <a href="{{ path('edu_forma_view',{'id': advert.id, 'page': p})}}">{{ p }}</a>
-    </li>
-{% endfor %}
+        {% for p in range(1, advert.nbcontent) %}
+            <li{% if p == page %} class="active"{% endif %}>
+                <a href="{{ path('edu_forma_view', {'id': advert.id, 'page': p}) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
 </ul>
     <p>
-        <a href="{{ path('edu_forma_home') }}" class="btn btn-default">
+        <a href="{{ path('edu_core_homepage') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
-            Retour à la liste
+            Retour à l'acceuil
         </a>
-        <a href="{{ path('edu_forma_edit', {'id': advert.id}) }}" class="btn btn-default">
+        {% if advert.published and fadvert == null %}
+            <a href="{{ path('edu_forma_follow',{'id': advert.id}) }}" class="btn btn-default">
+                Suivre la formation
+            </a>
+        {% endif %}
+        {% if fadvert and fadvert.finished == false and fadvert.nbqcm == 0 %}
+        <a href="{{ path('edu_forma_finish',{'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i>
+            Terminer la formation
+        </a>
+        {% endif %}
+        {% if user.username == advert.author %}
+            <a href="{{ path('edu_forma_addpage', {'id': advert.id}) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-edit"></i>
-            Modifier la formation
+            Ajouter une page
         </a>
+            <a href="{{ path('edu_qcm_add', {'id': advert.id}) }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i>
+                Ajouter un qcm
+            </a>
+        {% if contentnew.scoreminimum <= 0 %}
+        <a href="{{ path('edu_forma_edit', {'id': advert.id, 'page': page}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            Modifier cette page
+        </a>
+        {% endif %}
         <a href="{{ path('edu_forma_delete', {'id': advert.id}) }}" class="btn btn-danger">
             <i class="glyphicon glyphicon-trash"></i>
             Supprimer la formation
         </a>
+        {% endif %}
+        {% if advert.published == false and is_granted('ROLE_FACTORY_ADMIN') %}
+        <a href="{{ path('edu_forma_publish', {'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i>
+            Publier la formation
+        </a>
+        {% endif %}
     </p>
-
+    <a href="{{ path('edu_core_homepage') }}" class="btn btn-default">
+        Partager
+    </a>
+    <a href="{{ path('edu_core_homepage') }}" class="btn btn-default">
+        Suggérer
+    </a>
+    <a href="{{ path('edu_core_homepage') }}" class="btn btn-default">
+        Noter
+    </a>
 {% endblock %}

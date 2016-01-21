@@ -1,150 +1,79 @@
 {# src/Edu/FormaBundle/Resources/views/Advert/form.html.twig #}
 
 
-<h3>Formulaire d'ajout</h3>
-
-
 <div class="well">
-    {{ form(form) }}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+
+        {# Génération du label. #}
+        {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-sm-1 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.title) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {# Génération du label. #}
+        {{ form_label(form.image, "Ajouter une miniature", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.image) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.image.file) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        {# Génération du label. #}
+        {{ form_label(form.categories, "Selectionez les categories", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.categories) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+
+        {# Génération du label. #}
+    {{ form_label(form.contentnew.file, "Inserez une video") }}
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.contentnew) }}
+        {{ form_widget(form.contentnew.file) }}
+    {{ form_label(form.contentnew.texte, "Créer votre contenu") }}
+        {{ form_widget(form.contentnew.texte) }}
+
+
+
+
+    {# Génération du label + error + widget pour un champ = form_row() #}
+
+
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+
+    {# Génération automatique des champs pas encore écrits.
+
+       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+
+       et tous les champs cachés (type « hidden »). #}
+
+    {{ form_rest(form) }}
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+
+    {{ form_end(form) }}
 </div>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-{# Voici le script en question : #}
-<script type="text/javascript">/*
-    $(document).ready(function() {
-        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-        var $container = $('div#edu_formabundle_advert_categories');
-
-        // On ajoute un lien pour ajouter une nouvelle catégorie
-        var $addLink = $('<a href="#" id="add_category2" class="btn btn-default">Ajouter une catégorie</a>');
-        $container.append($addLink);
-
-        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-        $addLink.click(function(e) {
-            addCategory($container);
-            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-            return false;
-        });
-
-        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-        var index = $container.find(':input').length;
-
-        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-        if (index == 0) {
-            addCategory($container);
-        } else {
-            // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
-            $container.children('div').each(function() {
-                addDeleteLink($(this));
-            });
-        }
-
-        // La fonction qui ajoute un formulaire Categorie
-        function addCategory($container) {
-            // Dans le contenu de l'attribut « data-prototype », on remplace :
-            // - le texte "__name__label__" qu'il contient par le label du champ
-            // - le texte "__name__" qu'il contient par le numéro du champ
-            var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
-                    .replace(/__name__/g, index));
-
-            // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-            addDeleteLink($prototype);
-
-            // On ajoute le prototype modifié à la fin de la balise <div>
-            $container.append($prototype);
-
-            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-            index++;
-        }
-
-        // La fonction qui ajoute un lien de suppression d'une catégorie
-        function addDeleteLink($prototype) {
-            // Création du lien
-            $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-            // Ajout du lien
-            $prototype.append($deleteLink);
-
-            // Ajout du listener sur le clic du lien
-            $deleteLink.click(function(e) {
-                $prototype.remove();
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });
-        }
-    });
-</script>
-
----------------------------------------------------
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-        var $container1 = $('div#edu_formabundle_advert_content');
-
-        // On ajoute un lien pour ajouter une nouvelle catégorie
-        var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une page</a>');
-        $container1.append($addLink);
-
-        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-        $addLink.click(function(e) {
-            addContenu($container1);
-            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-            initTinyMCE();
-            return false;
-        });
-
-        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-        var index1 = $container1.find(':input').length;
-
-        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-        if (index1 == 0) {
-            addContenu($container1);
-        } else {
-            // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
-            $container1.children('div').each(function() {
-                addDeleteLink1($(this));
-            });
-        }
-
-        // La fonction qui ajoute un formulaire Categorie
-        function addContenu($container1) {
-            // Dans le contenu de l'attribut « data-prototype », on remplace :
-            // - le texte "__name__label__" qu'il contient par le label du champ
-            // - le texte "__name__" qu'il contient par le numéro du champ
-            var $prototype1 = $($container1.attr('data-prototype').replace(/__name__label__/g, 'Page n°' + (index1+1))
-                    .replace(/__name__/g, index1));
-
-            // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-            addDeleteLink1($prototype1);
-
-            // On ajoute le prototype modifié à la fin de la balise <div>
-            $container1.append($prototype1);
-
-
-
-            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-            index1++;
-        }
-
-        // La fonction qui ajoute un lien de suppression d'une catégorie
-        function addDeleteLink1($prototype1) {
-            // Création du lien
-           /* $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-            // Ajout du lien
-            $prototype1.append($deleteLink);
-
-            // Ajout du listener sur le clic du lien
-            $deleteLink.click(function(e) {
-                $prototype1.remove();
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });*/
-        }
-    });
-</script>
-
-{{ tinymce_init() }}

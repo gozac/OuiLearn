@@ -1,0 +1,37 @@
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Message - {{ thread.subject }} - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+    <br>
+    <div class="panel panel-default">
+    {% for message in thread.messages %}
+        {% if app.user == message.author %}
+            <div class="panel-body">
+                {{ message.content | raw }}
+                par {{ message.author }},
+                le {{ message.CreatedAt|date('d/m/Y') }}
+            </div>
+        {% else %}
+            <div class="panel-heading">
+                {{ message.content | raw }}
+                par {{ message.author }},
+                le {{ message.CreatedAt|date('d/m/Y') }}
+            </div>
+        {% endif %}
+    {% else %}
+        <li>Pas de message reçu</li>
+    {% endfor %}
+        <form action="{{ path('edu_messagebis_view', { 'id':thread.id }) }}" method="post">
+            {# Ceci va générer le champ CSRF #}
+            <div>
+                {{ form_rest(form) }}
+            </div>
+            <div class="col-sm-1">
+                <input type="submit" value="Confirmer" class="btn btn-ok" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

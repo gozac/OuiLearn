@@ -6,14 +6,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}EduFactory Plateforme{% endblock %}</title>
+    <title>{% block title %}OuiLearn{% endblock %}</title>
     {% block stylesheets %}
         {# On charge le CSS de bootstrap depuis le site directement #}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     {% endblock %}
 </head>
 <body>
-<div class="container">
+<div>
+    <div id="connect">
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         Connecté en tant que {{ app.user.username }}
         -
@@ -22,37 +23,47 @@
         <a href="{{ path('fos_user_security_login') }}">Connexion</a>
         <a href="{{ path('fos_user_registration_register') }}">Inscription</a>
     {% endif %}
-            <div id="header" class="jumbotron">
-        <h1>
-            <a href="{{ path('edu_core_homepage') }}">
-            <img src="http://www.edufactory.com/images/logo-edufactory.png">
-        </a>
-        </h1>
     </div>
-
+    <div class="text-center">
+            <div id="header" class="col-md-3>
+                    <a href="{{ path('edu_core_homepage') }}">
+                    <img  witdh="160" height="160" src= "http://www.ouilearn.com/test/web/ressources_img/logo-ouilearn.png">
+                    </a>Version: {{ version }}
+            </div>
+    </div>
     <div class="row">
-        <div id="menu" class="col-md-3">
-            <h3>Navigation</h3>
+        <div id="menu" class="col-md-2">
+            <h3></h3>
+            <div class="jumbotron">
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="{{ path('edu_core_homepage') }}">Accueil</a></li>
-                <li><a href="{{ path('edu_core_contact') }}">Mon compte</a></li>
+                <li><a href="{{ path('edu_forma_myformation') }}">Mes Formations</a></li>
+                <li><a href="{{ path('edu_messagebis_homepage') }}">Messages</a></li>
                 {% if is_granted('ROLE_AUTEUR') %}
-                    <li><a href="{{ path('edu_forma_add') }}">Ajouter une formation</a></li>
-                {% else %}
+                    <li><a href="{{ path('edu_forma_add') }}">Créer une formation</a></li>
+                {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.beauthor == 0 %}
                     <li><a href="{{ path('edu_core_beauthor') }}">Devenir auteur</a></li>
                 {% endif %}
-                <li><a href="{{ path('edu_core_formation') }}">Mes Formations</a></li>
-                <li><a href="{{ path('edu_core_contact') }}">Forum</a></li>
+                <li><a href="{{ path('fos_user_change_password') }}">Mon compte</a></li>
+                <li><a href="{{ path('edu_factory_homepage') }}">Menu entreprise</a></li>
                 <li><a href="{{ path('edu_core_contact') }}">Contact</a></li>
-                <li><a href="http://www.edufactory.com">EduFactory</a></li>
             </ul>
         </div>
-        <div id="content" class="col-md-9">
+            </div>
+        <div id="content" class="col-md-10">
+            {% for message in app.session.flashbag.get('info') %}
+                <br>
+                <div>{{ message }} </div>
+            {% endfor %}
+            {{ "\n\n"|nl2br }}
             {% block body %}
             {% endblock %}
+            <div>
+                {% block connect %}
+                {% endblock %}
+            </div>
         </div>
     </div>
-
     <hr>
 
     <footer>
@@ -63,6 +74,7 @@
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {{ tinymce_init() }}
 {% endblock %}
 
 </body>

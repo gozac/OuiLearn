@@ -1,0 +1,40 @@
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Menu entreprise - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h2>Nouveaux auteurs</h2><hr>
+    {% if author %}
+        <li>
+            {{ author.username }}
+            {{ author.email }}
+        </li>
+    <form action="{{ path('edu_factory_homepage') }}" method="post">
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+        <input type="submit" value="Confirmer" class="btn btn-ok" />
+    </form>
+    Repondre
+    {% endif %}
+    <h2>Nouvelles formations</h2><hr>
+    <p>
+    {% if advert %}
+    <a href="{{ path('edu_forma_view', {'id': advert.id}) }}">
+    {% if advert.image is not null %}
+    <img alt="{{ advert.image.alt }}"  width="50" height="50" src="{{ asset(advert.image.webPath) }}" />
+    {% endif %}
+    {{ advert.title }}
+    </a>
+    {% endif %}
+    </p>
+    <h2>Tableaux de bord</h2><hr>
+    <p>
+    <h4><a href="{{ path('edu_factory_formation') }}">Formations >></a></h4>
+    <h4><a href="{{ path('edu_factory_membre') }}">Membres >></a></h4>
+    <h4><a href="{{ path('edu_factory_auteur') }}">Auteurs >></a></h4>
+    <h4><a href="{{ path('edu_factory_categorie') }}">Ajouter une categorie >></a></h4>
+    </p>
+
+{% endblock %}

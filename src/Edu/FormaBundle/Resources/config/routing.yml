@@ -1,8 +1,8 @@
 # src/Edu/FormaBundle/Resources/config/routing.yml
 
 edu_forma_home:
-    path:      /{page}
-    defaults:  { _controller: EduFormaBundle:Advert:index, page: 1 }
+    path:      /recherche/{recherche}/{page}
+    defaults:  { _controller: EduFormaBundle:Advert:index, recherche: nothing, page: 1 }
     requirements:
         page:    \d*
 
@@ -17,14 +17,47 @@ edu_forma_add:
     path:      /add
     defaults:  { _controller: EduFormaBundle:Advert:add }
 
+edu_forma_addpage:
+    path:      /newpage/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:addpage }
+    requirements:
+        id:   \d+
+
+edu_forma_myformation:
+    path:      /myformation
+    defaults:  { _controller: EduFormaBundle:Advert:showall }
+
 edu_forma_edit:
-    path:      /edit/{id}
+    path:      /edit/{id}/{page}
     defaults:  { _controller: EduFormaBundle:Advert:edit }
     requirements:
         id: \d+
+        page: \d*
 
 edu_forma_delete:
     path:      /delete/{id}
     defaults:  { _controller: EduFormaBundle:Advert:delete }
     requirements:
         id: \d+
+
+edu_forma_follow:
+    path:      /follow/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:follow }
+    requirements:
+        id: \d+
+
+edu_forma_publish:
+    path:      /publish/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:publish }
+    requirements:
+        id: \d+
+
+edu_forma_finish:
+    path:      /finish/{id}
+    defaults:  { _controller: EduFormaBundle:Advert:finish }
+    requirements:
+        id: \d+
+
+edu_forma_categorie:
+    path:     /categorie/{recherche}/{page}
+    defaults: { _controller: EduFormaBundle:Advert:categorie, recherche: nothing, page: 1 }

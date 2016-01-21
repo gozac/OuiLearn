@@ -5,6 +5,9 @@ namespace Edu\FormaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Edu\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Advert
@@ -12,22 +15,33 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Edu\FormaBundle\Entity\AdvertRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields="title", message="Une annonce existe déjà avec ce titre.")
  */
 class Advert
 {
-    /**
-     * @ORM\OneToMany(targetEntity="Edu\FormaBundle\Entity\Application", mappedBy="advert")
-     */
-    private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
     /**
      * @ORM\ManyToMany(targetEntity="Edu\FormaBundle\Entity\Category", cascade={"persist"})
      */
     private $categories;
 
     /**
-     * @ORM\OneToOne(targetEntity="Edu\FormaBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Edu\FormaBundle\Entity\Content", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $contentnew;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Edu\FormaBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Edu\UserBundle\Entity\User")
+     * @Assert\Valid()
+     */
+    private $author;
+
     // Vos autres attributs…
     /**
      * @var integer
@@ -53,6 +67,7 @@ class Advert
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -60,40 +75,62 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(min=7, minMessage="Le titre doit faire au moins {{ limit }} caractères.")
      */
     private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="author", type="string", length=255)
-     */
-    private $author;
-
-    /**
      * @var array
      *
-     * @ORM\Column(name="content", type="array")
+     * @ORM\Column(name="factory", type="string", length=255, nullable=true)
      */
-    private $content;
+    private $factory;
 
     /**
-     * @ORM\Column(name="nb_applications", type="integer")
+     * @var integer
+     *
+     * @ORM\Column(name="nbfollow", type="integer")
      */
-    private $nbApplications = 0;
+    private $nbfollow = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbqcm", type="integer")
+     */
+    private $nbqcm = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbcontent", type="integer")
+     */
+    private $nbcontent = 1;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nblike", type="integer")
+     */
+    private $nblike = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbcoach", type="integer")
+     */
+    private $nbcoach = 0;
 
     /**
      * @ORM\Column(name="published", type="boolean")
      */
-    private $published = true;
+    private $published = false;
 
     public function __construct()
     {
         // Par défaut, la date de l'annonce est la date d'aujourd'hui
         $this->date = new \Datetime();
-        $this->content = array();
         $this->categories   = new ArrayCollection();
-        $this->applications = new ArrayCollection();
     }
     /**
      * @ORM\PreUpdate
@@ -115,21 +152,11 @@ class Advert
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    public function increaseApplication()
-    {
-        $this->nbApplications++;
-    }
-
-    public function decreaseApplication()
-    {
-        $this->nbApplications--;
     }
 
     /**
@@ -148,7 +175,7 @@ class Advert
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -171,57 +198,11 @@ class Advert
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set author
-     *
-     * @param string $author
-     * @return Advert
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return string 
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return Advert
-     */
-    public function setContent($content)
-    {
-        $this->content[] = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 
     /**
@@ -240,7 +221,7 @@ class Advert
     /**
      * Get published
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublished()
     {
@@ -273,50 +254,14 @@ class Advert
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
         return $this->categories;
     }
 
-    /**
-     * Add applications
-     *
-     * @param \Edu\FormaBundle\Entity\Application $applications
-     * @return Advert
-     */
-    public function addApplication(Application $applications)
-    {
-        $this->applications[] = $applications;
 
-        // On lie l'annonce à la candidature
-        $applications->setAdvert($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove applications
-     *
-     * @param \Edu\FormaBundle\Entity\Application $applications
-     */
-    public function removeApplication(Application $applications)
-    {
-        $this->applications->removeElement($applications);
-        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
-        // $application->setAdvert(null);
-    }
-
-    /**
-     * Get applications
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getApplications()
-    {
-        return $this->applications;
-    }
 
     /**
      * Set updatedAt
@@ -334,7 +279,7 @@ class Advert
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -357,7 +302,7 @@ class Advert
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -365,25 +310,186 @@ class Advert
     }
 
     /**
-     * Set nbApplications
+     * Set factory
      *
-     * @param integer $nbApplications
+     * @param string $factory
      * @return Advert
      */
-    public function setNbApplications($nbApplications)
+    public function setFactory($factory)
     {
-        $this->nbApplications = $nbApplications;
+        $this->factory = $factory;
 
         return $this;
     }
 
     /**
-     * Get nbApplications
+     * Get factory
+     *
+     * @return string 
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
+     * Set nbfollow
+     *
+     * @param integer $nbfollow
+     * @return Advert
+     */
+    public function setNbfollow($nbfollow)
+    {
+        $this->nbfollow = $nbfollow;
+
+        return $this;
+    }
+
+    public function increaseFollow()
+    {
+        $this->nbfollow++;
+        $this->getAuthor()->increaseFollow();
+    }
+
+    /**
+     * Get nbfollow
      *
      * @return integer 
      */
-    public function getNbApplications()
+    public function getNbfollow()
     {
-        return $this->nbApplications;
+        return $this->nbfollow;
+    }
+
+    /**
+     * Set nblike
+     *
+     * @param integer $nblike
+     * @return Advert
+     */
+    public function setNblike($nblike)
+    {
+        $this->nblike = $nblike;
+
+        return $this;
+    }
+
+    /**
+     * Get nblike
+     *
+     * @return integer 
+     */
+    public function getNblike()
+    {
+        return $this->nblike;
+    }
+
+    public function increaseLike()
+    {
+        $this->nblike++;
+        $this->getAuthor()->increaseLike();
+    }
+
+    /**
+     * Set author
+     *
+     * @param User $author
+     * @return Advert
+     */
+    public function setAuthor(User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Edu\UserBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set nbcoach
+     *
+     * @param integer $nbcoach
+     * @return Advert
+     */
+    public function setNbcoach($nbcoach)
+    {
+        $this->nbcoach = $nbcoach;
+
+        return $this;
+    }
+
+    /**
+     * Get nbcoach
+     *
+     * @return integer 
+     */
+    public function getNbcoach()
+    {
+        return $this->nbcoach;
+    }
+
+    public function increaseCoach()
+    {
+        $this->nbcoach++;
+        $this->getAuthor()->increaseCoach();
+    }
+
+    /**
+     * Set contentnew
+     *
+     * @param \Edu\FormaBundle\Entity\Content $contentnew
+     * @return Advert
+     */
+    public function setContentnew(\Edu\FormaBundle\Entity\Content $contentnew = null)
+    {
+        $this->contentnew = $contentnew;
+
+        return $this;
+    }
+
+    /**
+     * Get contentnew
+     *
+     * @return \Edu\FormaBundle\Entity\Content 
+     */
+    public function getContentnew()
+    {
+        return $this->contentnew;
+    }
+
+    /**
+     * Set nbcontent
+     *
+     * @param integer $nbcontent
+     * @return Advert
+     */
+    public function setNbcontent($nbcontent)
+    {
+        $this->nbcontent = $nbcontent;
+
+        return $this;
+    }
+
+    public function increaseContent()
+    {
+        $this->nbcontent++;
+    }
+
+    /**
+     * Get nbcontent
+     *
+     * @return integer
+     */
+    public function getNbcontent()
+    {
+        return $this->nbcontent;
     }
 }

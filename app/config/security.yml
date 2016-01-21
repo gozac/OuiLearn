@@ -4,10 +4,10 @@ security:
             Edu\UserBundle\Entity\User: sha512
 
     role_hierarchy:
-        ROLE_FACTORY:      [ROLE_USER]
-        ROLE_AUTEUR:      [ROLE_USER]
-        ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_AUTEUR:          [ROLE_USER]
+        ROLE_FACTORY_ADMIN:   [ROLE_MODERATEUR]
+        ROLE_ADMIN:           [ROLE_AUTEUR, ROLE_MODERATEUR]
+        ROLE_SUPER_ADMIN:     [ROLE_ADMIN, ROLE_FACTORY_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         main:
@@ -17,6 +17,9 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        console:
+            pattern:   ^/_console
+            anonymous: true
         main_login:
            pattern:   ^/(login$|register)
            anonymous: true
@@ -29,10 +32,11 @@ security:
                 check_path: fos_user_security_check
             logout:
                 path:   fos_user_security_logout
-                target: /platform
+                target: /
             remember_me:
                 key:        %secret% # %secret% est un paramètre de parameters.yml
 
     access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/entreprise, roles: ROLE_FACTORY_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

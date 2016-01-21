@@ -1,0 +1,15 @@
+<div class="well">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+
+    {% for question in form %}
+    {% for reponse in question %}
+        {{ form_label(reponse) }}
+        {{ form_widget(reponse) }}
+        <br>
+    {% endfor %}
+    {% endfor %}
+    {{ form_rest(form) }}
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
+</div>

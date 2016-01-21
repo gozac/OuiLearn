@@ -6,18 +6,14 @@ edu_core_contact:
     path:     /contact
     defaults: { _controller: EduCoreBundle:Default:contact }
 
-edu_core_formation:
-    path:     /myformation
-    defaults: { _controller: EduCoreBundle:Default:myformation }
-
 edu_core_beauthor:
     path:     /author
     defaults: { _controller: EduCoreBundle:Default:author }
 
-edu_core_demo1:
-    path:     /demo1
-    defaults: { _controller: EduCoreBundle:Default:demo1 }
+edu_core_recherche:
+    path:     /recherche
+    defaults: { _controller: EduCoreBundle:Default:recherche }
 
-edu_core_demo2:
-    path:     /demo2
-    defaults: { _controller: EduCoreBundle:Default:demo2 }
+edu_core_user:
+    path:     /user/{recherche}/{page}
+    defaults: { _controller: EduCoreBundle:Default:user, recherche: nothing, page: 1 }

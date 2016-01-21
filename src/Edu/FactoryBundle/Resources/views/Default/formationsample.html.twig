@@ -1,0 +1,33 @@
+<div id="menu" class="col-md-3">
+    <h4>Suivies +</h4>
+    {% for follow in follows %}
+        <li><a href="{{ path('edu_forma_view', {'id': follow.id}) }}">
+                {% if follow.image is not null %}
+                    <img alt="{{ follow.image.alt }}"  width="50" height="50" src="{{ asset(follow.image.webPath) }}" />
+                {% endif %}
+                {{ follow.title }}
+            </a></li>
+    {% endfor %}
+</div>
+<div id="menu" class="col-md-3">
+    <h4>Appréciées +</h4>
+    {% for like in likes %}
+        <li><a href="{{ path('edu_forma_view', {'id': like.id}) }}">
+                {% if like.image is not null %}
+                    <img alt="{{ like.image.alt }}"  width="50" height="50" src="{{ asset(like.image.webPath) }}" />
+                {% endif %}
+                {{ like.title }}
+            </a></li>
+    {% endfor %}
+</div>
+<div id="menu" class="col-md-3">
+    <h4>Avec Coaching +</h4>
+    {% for coach in coachs %}
+        <li><a href="{{ path('edu_forma_view', {'id': coach.id}) }}">
+                {% if coach.image is not null %}
+                    <img alt="{{ coach.image.alt }}"  width="50" height="50" src="{{ asset(coach.image.webPath) }}" />
+                {% endif %}
+                {{ coach.title }}
+            </a></li>
+    {% endfor %}
+</div>

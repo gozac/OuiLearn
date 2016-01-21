@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function getAdvertonUser($advert){
+        $qb = $this
+            ->createQueryBuilder('u')
+            ->Join('u.followadvert', 'a')
+            ->addSelect('a');
+
+        $qb->where($qb->expr()->in('a', $advert));
+
+        return $qb->getQuery()->getResult();
+    }
 }

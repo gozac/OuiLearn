@@ -1,0 +1,221 @@
+<?php
+
+namespace Edu\FormaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Feedback
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Edu\FormaBundle\Entity\FeedbackRepository")
+ */
+class Feedback
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Edu\FormaBundle\Entity\Advert")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $advert;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="comprehension", type="smallint")
+     */
+    private $comprehension;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="resolution", type="smallint")
+     */
+    private $resolution;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="logique", type="smallint")
+     */
+    private $logique;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ludique", type="smallint")
+     */
+    private $ludique;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarque", type="text")
+     */
+    private $remarque;
+
+    /**
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    public function __construct()
+    {
+        $this->date = new \Datetime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set comprehension
+     *
+     * @param integer $comprehension
+     * @return Feedback
+     */
+    public function setComprehension($comprehension)
+    {
+        $this->comprehension = $comprehension;
+
+        return $this;
+    }
+
+    /**
+     * Get comprehension
+     *
+     * @return integer 
+     */
+    public function getComprehension()
+    {
+        return $this->comprehension;
+    }
+
+    /**
+     * Set resolution
+     *
+     * @param integer $resolution
+     * @return Feedback
+     */
+    public function setResolution($resolution)
+    {
+        $this->resolution = $resolution;
+
+        return $this;
+    }
+
+    /**
+     * Get resolution
+     *
+     * @return integer 
+     */
+    public function getResolution()
+    {
+        return $this->resolution;
+    }
+
+    /**
+     * Set logique
+     *
+     * @param integer $logique
+     * @return Feedback
+     */
+    public function setLogique($logique)
+    {
+        $this->logique = $logique;
+
+        return $this;
+    }
+
+    /**
+     * Get logique
+     *
+     * @return integer 
+     */
+    public function getLogique()
+    {
+        return $this->logique;
+    }
+
+    /**
+     * Set ludique
+     *
+     * @param integer $ludique
+     * @return Feedback
+     */
+    public function setLudique($ludique)
+    {
+        $this->ludique = $ludique;
+
+        return $this;
+    }
+
+    /**
+     * Get ludique
+     *
+     * @return integer 
+     */
+    public function getLudique()
+    {
+        return $this->ludique;
+    }
+
+    /**
+     * Set remarque
+     *
+     * @param string $remarque
+     * @return Feedback
+     */
+    public function setRemarque($remarque)
+    {
+        $this->remarque = $remarque;
+
+        return $this;
+    }
+
+    /**
+     * Get remarque
+     *
+     * @return string 
+     */
+    public function getRemarque()
+    {
+        return $this->remarque;
+    }
+
+    /**
+     * Set advert
+     *
+     * @param \Edu\FormaBundle\Entity\Advert $advert
+     * @return Feedback
+     */
+    public function setAdvert(\Edu\FormaBundle\Entity\Advert $advert)
+    {
+        $this->advert = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Get advert
+     *
+     * @return \Edu\FormaBundle\Entity\Advert 
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+}

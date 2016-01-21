@@ -1,0 +1,52 @@
+{# src/Edu/FormaBundle/Resources/views/myformation.html.twig #}
+
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes formations - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div id="menu" class="col-md-3">
+    <h2>Formations... en cours</h2>
+
+        {% for fadvert in listfollow %}
+            <li>
+                <a href="{{ path('edu_forma_view', {'id': fadvert.id}) }}">
+                    {% if fadvert.image is not null %}
+                        <img alt="{{ fadvert.image.alt }}"  width="50" height="50" src="{{ asset(fadvert.image.uploadDir ~ '/' ~ fadvert.image.id ~ '.' ~ fadvert.image.url) }}" />
+                    {% endif %}
+                    {{ fadvert.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </div>
+    <div id="menu" class="col-md-3">
+    <h2>Terminées</h2>
+
+    {% for fadvert in listfinish %}
+        <li>
+            <a href="{{ path('edu_forma_view', {'id': fadvert.id}) }}">
+                {% if fadvert.image is not null %}
+                    <img alt="{{ fadvert.image.alt }}"  width="50" height="50" src="{{ asset(fadvert.image.uploadDir ~ '/' ~ fadvert.image.id ~ '.' ~ fadvert.image.url) }}" />
+                {% endif %}
+                {{ fadvert.title }}
+            </a>
+        </li>
+    {% endfor %}
+    </div>
+    <div id="menu" class="col-md-3">
+    <h2>Dont je suis l'auteur</h2>
+
+    {% for fadvert in listAuthor %}
+        <li>
+            <a href="{{ path('edu_forma_view', {'id': fadvert.id}) }}">
+                {% if fadvert.image is not null %}
+                    <img alt="{{ fadvert.image.alt }}"  width="50" height="50" src="{{ asset(fadvert.image.uploadDir ~ '/' ~ fadvert.image.id ~ '.' ~ fadvert.image.url) }}" />
+                {% endif %}
+                {{ fadvert.title }}
+            </a>
+        </li>
+    {% endfor %}
+    </div>
+{% endblock %}

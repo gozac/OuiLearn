@@ -1,0 +1,71 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/form.html.twig #}
+
+
+<div class="well">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+
+        {# Génération du label. #}
+        {{ form_label(form.advert.title, "Titre", {'label_attr': {'class': 'col-sm-1 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.advert.title) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.advert.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {# Génération du label. #}
+        {{ form_label(form.advert.image, "Changer la miniature", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.advert.image) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.advert.image.file) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        {# Génération du label. #}
+        {{ form_label(form.advert.categories, "Selectionez les categories", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.advert.categories) }}
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.advert.categories, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+    </div>
+
+    {# Génération du label. #}
+    {{ form_label(form.content.file, "éditer la video") }}
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.content) }}
+    {{ form_widget(form.content.file) }}
+    {{ form_label(form.content.texte, "editer votre contenu") }}
+    {{ form_widget(form.content.texte) }}
+
+    {# Génération du label + error + widget pour un champ = form_row() #}
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    {# Génération automatique des champs pas encore écrits.
+       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+       et tous les champs cachés (type « hidden »). #}
+    {{ form_rest(form) }}
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
+
+</div>
+
+---------------------------------------------------
+

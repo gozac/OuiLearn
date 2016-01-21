@@ -14,12 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Application
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Edu\FormaBundle\Entity\Advert", inversedBy="applications")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $advert;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")

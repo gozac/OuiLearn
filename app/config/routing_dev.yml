@@ -16,7 +16,7 @@ _errors:
 
 _console:
     resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
-    prefix: /_console
+    prefix: /
 
 _main:
     resource: routing.yml

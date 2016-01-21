@@ -1,0 +1,22 @@
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Message - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+    <h2>Liste des Messages</h2>
+    {% for message in messages %}
+        <a href="{{ path('edu_message_view', {'sender': message.sender}) }}">
+            <div class="well">
+                {{ message.sender }},
+                le {{ message.date|date('d/m/Y') }}
+            </div>
+        </a>
+    {% else %}
+        <li>Pas de message reçu</li>
+    {% endfor %}
+    <a href="{{ path('edu_message_add') }}">
+        <button type="button" class="btn btn-success">Écrire un message</button>
+    </a>
+{% endblock %}

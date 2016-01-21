@@ -1,0 +1,34 @@
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Message - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+    <h2>Messages reçu</h2>
+    {% for thread in inbox %}
+        <div class="well"><a href="{{ path('edu_messagebis_view', {'id': thread.id}) }}">
+                {{ thread.subject }}</a>,
+            {% for meta in thread.metadata %}
+                [{{ meta.participant }}]
+            {% endfor %}
+        </div>
+    {% else %}
+        <li>Pas de message reçu</li>
+    {% endfor %}
+    <h2>Messages envoyés</h2>
+    {% for thread in sent %}
+
+            <div class="well"><a href="{{ path('edu_messagebis_view', {'id': thread.id}) }}">
+                {{ thread.subject }}</a>,
+                {% for meta in thread.metadata %}
+                    [{{ meta.participant }}]
+                {% endfor %}
+            </div>
+    {% else %}
+        <li>Pas de message envoyés</li>
+    {% endfor %}
+    <a href="{{ path('edu_messagebis_add') }}">
+        <button type="button" class="btn btn-success">Écrire un message</button>
+    </a>
+{% endblock %}

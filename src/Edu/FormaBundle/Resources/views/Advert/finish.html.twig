@@ -1,0 +1,88 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/finish.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+
+{% block title %}
+    Terminer une formation - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+<h3>Vous avez fini cette formation</h3>
+<h3>Evaluez-la !</h3>
+
+
+<div>
+
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.comprehension, "Elle m’a aidé à comprendre ma problématique", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.comprehension) }}
+
+        <div class="col-sm-4">
+            {# Génération de l'input. #}
+            {{ form_widget(form.comprehension, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    {# Idem pour un autre champ. #}
+    <div class="form-group">
+        {{ form_label(form.resolution, "Elle m’a aidé à résoudre mon problème", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+        {{ form_errors(form.resolution) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.resolution, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.logique, "Elle est  logique et structurée", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+        {{ form_errors(form.logique) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.logique, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.ludique, "Elle est plaisante à suivre et bien écrite", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+        {{ form_errors(form.ludique) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.ludique, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.remarque, "Remarques ou suggestions :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+        {{ form_errors(form.remarque) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.remarque, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.coaching, "Prendre contact avec l'auteur", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+        {{ form_errors(form.coaching) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.coaching, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    {# Génération du label + error + widget pour un champ #}
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    {# Génération automatique des champs pas encore écrits.
+       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+       et tous les champs cachés (type « hidden »). #}
+    {{ form_rest(form) }}
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

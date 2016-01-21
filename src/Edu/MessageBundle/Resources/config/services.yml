@@ -1,0 +1,4 @@
+services:
+#    edu_message.example:
+#        class: Edu\MessageBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

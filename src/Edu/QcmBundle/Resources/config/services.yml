@@ -1,0 +1,4 @@
+services:
+#    edu_qcm.example:
+#        class: Edu\QcmBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

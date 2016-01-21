@@ -1,0 +1,41 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/addpage.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Ajouter une page - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+<h2>Votre nouvelle page:</h2>
+
+    <div class="well">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+        {# Les erreurs générales du formulaire. #}
+        {{ form_errors(form) }}
+
+
+        {# Génération du label. #}
+        {{ form_label(form.file, "Inserez une video") }}
+        {{ form_widget(form.file) }}
+        {{ form_label(form.texte, "Créer votre contenu") }}
+        {{ form_widget(form.texte) }}
+
+
+        {# Génération du label + error + widget pour un champ = form_row() #}
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+        {# Génération automatique des champs pas encore écrits.
+          Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+           et tous les champs cachés (type « hidden »). #}
+        {{ form_rest(form) }}
+
+        {# Fermeture de la balise <form> du formulaire HTML #}
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

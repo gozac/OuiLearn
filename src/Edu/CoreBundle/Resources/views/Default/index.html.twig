@@ -3,12 +3,18 @@
 {% extends "EduCoreBundle::layout.html.twig" %}
 
 {% block body %}
-    {% for message in app.session.flashbag.get('info') %}
-    <p><div>{{ message }} </div></p>
-    {% endfor %}
-    <h2>Bienvenue sur EduFormation</h2>
-    Des cours 100% en ligne pour un apprentissage efficace
-    {{ "\n\n\n\n"|nl2br }}
-    <h4>Formations recentes</h4>
-            {{ render(controller("EduFormaBundle:Advert:menu", {'limit': 2})) }}
+    <h4>Formations en cours</h4>
+    {% for advert in adverts %}
+    <li>
+        <a href="{{ path('edu_forma_view', {'id': advert.id}) }}">
+            {% if advert.image is not null %}
+                <img alt="{{ advert.image.alt }}"  width="50" height="50" src="{{ asset(advert.image.uploadDir ~ '/' ~ advert.image.id ~ '.' ~ advert.image.url) }}" />
+            {% endif %}
+            {{ advert.title }}
+        </a>
+    </li>
+{% endfor %}
+    <hr><h4>Formations Disponible</h4>
+    {{ render(controller("EduFormaBundle:Advert:menu", {'limit': 3})) }}
+    <a href="{{ path('edu_core_recherche') }}"><hr><h4>Rechercher une formation >></h4></a>
 {% endblock %}

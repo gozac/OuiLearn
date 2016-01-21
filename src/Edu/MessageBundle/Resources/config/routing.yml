@@ -1,0 +1,11 @@
+edu_message_homepage:
+    path:     /
+    defaults: { _controller: EduMessageBundle:Default:index }
+
+edu_message_view:
+    path:     /view/{sender}
+    defaults: { _controller: EduMessageBundle:Default:view }
+
+edu_message_add:
+    path:     /add
+    defaults: { _controller: EduMessageBundle:Default:add }

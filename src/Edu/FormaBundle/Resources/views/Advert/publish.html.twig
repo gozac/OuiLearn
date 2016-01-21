@@ -1,0 +1,26 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/publish.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Publier une formation - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+    <h2>Publier une formation</h2>
+
+    <p>
+        Vous aller publier la formation suivante:
+        <li>{{ advert.title }}</li>
+    </p>
+    <form action="{{ path('edu_forma_publish', {'id': advert.id}) }}" method="post">
+        <a href="{{ path('edu_forma_view', {'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à l'accueil
+        </a>
+        <input type="submit" value="Confirmer" class="btn btn-default" />
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}

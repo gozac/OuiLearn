@@ -1,3 +1,11 @@
+edu_qcm:
+    resource: "@EduQcmBundle/Resources/config/routing.yml"
+    prefix:   /
+
+edu_messagebis:
+    resource: "@EduMessagebisBundle/Resources/config/routing.yml"
+    prefix:   /messages
+
 edu_user:
     resource: "@EduUserBundle/Resources/config/routing.yml"
     prefix:   /
@@ -9,6 +17,14 @@ edu_core:
 edu_forma:
     resource: "@EduFormaBundle/Resources/config/routing.yml"
     prefix:   /platform
+
+edu_message:
+    resource: "@EduMessageBundle/Resources/config/routing.yml"
+    prefix:   /message
+
+edu_factory:
+    resource: "@EduFactoryBundle/Resources/config/routing.yml"
+    prefix:   /entreprise
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -28,5 +44,6 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
 
 

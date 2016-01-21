@@ -1,4 +1,8 @@
 services:
+    edu.form.registration:
+            class: Edu\UserBundle\Form\RegistrationType
+            tags:
+                - { name: form.type, alias: edu_user_registration }
 #    edu_user.example:
 #        class: Edu\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

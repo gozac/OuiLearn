@@ -1,0 +1,26 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/delete.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Ajouter une categorie - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+    <h2>Ajouter une categorie</h2>
+
+    <p>
+        Attention : la categorie sera ajoutée directment
+        après confirmation.
+    </p>
+    <form action="{{ path('edu_factory_categorie') }}" method="post">
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+        <a href="{{ path('edu_factory_homepage') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la la formation
+        </a>
+        <input type="submit" value="Confirmer" class="btn btn-danger" />
+    </form>
+{% endblock %}

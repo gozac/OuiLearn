@@ -22,6 +22,10 @@ class AppKernel extends Kernel
             new Edu\FormaBundle\EduFormaBundle(),
             new Edu\CoreBundle\EduCoreBundle(),
             new Edu\UserBundle\EduUserBundle(),
+            new Edu\FactoryBundle\EduFactoryBundle(),
+            new Edu\MessageBundle\EduMessageBundle(),
+            new Edu\MessagebisBundle\EduMessagebisBundle(),
+            new Edu\QcmBundle\EduQcmBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -29,8 +33,8 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         return $bundles;

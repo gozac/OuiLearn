@@ -1,0 +1,38 @@
+{# src/Edu/FormaBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "EduFormaBundle::layout.html.twig" %}
+
+{% block title %}
+    Recherche - {{ parent() }}
+{% endblock %}
+
+{% block eduforma_body %}
+
+    <ul>
+        <h2>Formations disponible</h2>
+        {% for advert in listAdverts %}
+            <li>
+                <a href="{{ path('edu_forma_view', {'id': advert.id}) }}">
+                    {% if advert.image is not null %}
+                        <img alt="{{ advert.image.alt }}"  width="50" height="50" src="{{ asset(advert.image.webPath) }}" />
+                    {% endif %}
+                    {{ advert.title }}
+                </a>
+                par {{ advert.author }},
+                le {{ advert.date|date('d/m/Y') }}
+            </li>
+        {% else %}
+            <li>Pas de formations trouvée pour << {{ recherche }} >></li>
+        {% endfor %}
+        <h2>Formations en construction</h2>
+        <ul class="pagination">
+            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('edu_forma_home', {'recherche': recherche}, {'page': p}) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+<?php
+
+namespace Edu\MessagebisBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use FOS\Message\Api\Model\ParticipantInterface;
+use FOS\Message\Api\Model\ThreadInterface;
+use FOS\Message\Driver\DoctrineORM\Entity\ThreadMetadata as BaseThreadMetadata;
+
+/**
+ * @ORM\Table(name="threads_metdata")
+ * @ORM\Entity
+ */
+class ThreadMetadata extends BaseThreadMetadata
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="metadata", cascade={"all"})
+     * @var ThreadInterface
+     */
+    protected $thread;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", cascade={"all"})
+     * @var ParticipantInterface
+     */
+    protected $participant;
+}

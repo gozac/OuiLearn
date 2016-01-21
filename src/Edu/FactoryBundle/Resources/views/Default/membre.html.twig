@@ -1,0 +1,17 @@
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Membres de l'entreprise - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for user in users %}
+        <li>
+            {{ user.username }}
+            {{ user.email }}
+            {% for role in user.roles %}
+                {{ role }}
+            {% endfor %}
+        </li>
+    {% endfor %}
+{% endblock %}

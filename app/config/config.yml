@@ -35,6 +35,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+            version: 1.1
 
 # Assetic Configuration
 assetic:
@@ -86,6 +88,13 @@ stof_doctrine_extensions:
             sluggable: true
 
 stfalcon_tinymce:
+
+  include_jquery: true
+
+  tinymce_jquery: true
+
+  selector: ".tinymce"
+
   tinymce_buttons:
           stfalcon: # Id of the first button
               title: "Stfalcon"
@@ -108,11 +117,13 @@ stfalcon_tinymce:
                        - {title: 'Test template 2', content: 'Test 2'}
               # BBCode tag compatible theme (see http://www.bbcode.org/reference.php)
               bbcode:
-                   plugins: ["code, link, preview, emoticons"]
+                   plugins: ["code, link, preview, emoticons, media"]
                    menubar: true
-                   toolbar1: "undo,redo,link,unlink,removeformat,cleanup,code,preview,emoticons"
+                   toolbar1: "undo,redo,link,unlink,removeformat,cleanup,code,preview,emoticons, media"
 fos_user:
     db_driver:     orm                        # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
     firewall_name: main                       # Le nom du firewall derrière lequel on utilisera ces utilisateurs
     user_class:    Edu\UserBundle\Entity\User # La classe de l'entité User que nous utilisons
-
+    registration:
+            form:
+                type: edu_user_registration

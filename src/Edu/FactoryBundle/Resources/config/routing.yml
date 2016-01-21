@@ -1,0 +1,19 @@
+edu_factory_homepage:
+    path:     /
+    defaults: { _controller: EduFactoryBundle:Factory:index }
+
+edu_factory_formation:
+    path:     /formation
+    defaults: { _controller: EduFactoryBundle:Factory:formation }
+
+edu_factory_auteur:
+    path:     /auteur
+    defaults: { _controller: EduFactoryBundle:Factory:auteur }
+
+edu_factory_membre:
+    path:     /membres
+    defaults: { _controller: EduFactoryBundle:Factory:membre }
+
+edu_factory_categorie:
+    path:     /categorie
+    defaults: { _controller: EduFactoryBundle:Factory:categorie }

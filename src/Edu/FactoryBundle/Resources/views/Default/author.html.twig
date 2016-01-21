@@ -1,0 +1,27 @@
+{% extends "EduCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Classement auteur - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h2>Classement des auteurs</h2><hr>
+    <div id="menu" class="col-md-3">
+        <h4>Suivies +</h4>
+        {% for follow in follows %}
+            <li>{{ follow.username }}</li>
+        {% endfor %}
+    </div>
+    <div id="menu" class="col-md-3">
+        <h4>Appréciées +</h4>
+        {% for like in likes %}
+            <li>{{ like.username }}</li>
+        {% endfor %}
+    </div>
+    <div id="menu" class="col-md-3">
+        <h4>Coachées +</h4>
+        {% for coach in coachs %}
+            <li>{{ coach.username }}</li>
+        {% endfor %}
+    </div>
+{% endblock %}
